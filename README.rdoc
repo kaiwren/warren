@@ -1,0 +1,12 @@
+= Warren 0.1.0
+
+(c) Copyright 2009 {Sidu Ponnappa}[http://blog.sidu.in]. All Rights Reserved.
+
+Warren is a MySQL only ActiveRecord extension that (moderately) transparently allows the creation, mirroring (via triggers) and fulltext searching of MyISAM tables for any transactional InnoDB table.
+
+== MySQL Fulltext Search
+
+MySQL fulltext search (which uses a MATCH query) has its own quirks which make it behave slightly differently from a normal find which filters with a WHERE or LIKE. Most notably:
+
+  * No rows are returned unless the MATCH clause filters out at least 50% of the rows in the table in two of the three fulltext search modes
+  * The only search mode where the 50% rule doesn't apply is Warren::Modes::Boolean, but here the search pattern cannot have any wildcards on the left side. In SQL terms, a boolean mode fulltext search only allows 'pattern%' and not '%pattern%'
