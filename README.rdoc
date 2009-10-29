@@ -10,3 +10,5 @@ MySQL fulltext search (which uses a MATCH query) has its own quirks which make i
 
   * No rows are returned unless the MATCH clause filters out at least 50% of the rows in the table in two of the three fulltext search modes
   * The only search mode where the 50% rule doesn't apply is Warren::Modes::Boolean, but here the search pattern cannot have any wildcards on the left side. In SQL terms, a boolean mode fulltext search only allows 'pattern%' and not '%pattern%'
+
+For more information, look up http://dev.mysql.com/doc/refman/5.1/en/fulltext-search.html

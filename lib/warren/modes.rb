@@ -8,7 +8,7 @@
 # See the License for the specific language governing permissions and limitations under the License. 
 
 module Warren
-  module Mode
+  module Modes
     Boolean = 'IN BOOLEAN MODE'
     NaturalLanguage = 'IN NATURAL LANGUAGE MODE'
     NaturalLanguageWithQueryExpansion = 'IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION'

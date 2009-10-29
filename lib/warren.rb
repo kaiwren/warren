@@ -21,6 +21,8 @@ module Warren
   end  
 end
 
+require "#{Warren::Root}/warren/modes"
+require "#{Warren::Root}/warren/match"
 require "#{Warren::Root}/warren/extensions"
 
 ActiveRecord::Base.class_eval{ include Warren::Extensions }

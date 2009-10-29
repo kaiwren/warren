@@ -16,7 +16,7 @@ module Warren
     
     module ClassMethods
       def enable_fulltext_search
-        Kernel.const_set("ReadOnly#{self.name.demodulize}", Class.new(ActiveRecord::Base))
+        self.extend Warren::Match
       end
 
       def create_read_only_my_isam_table
@@ -84,6 +84,10 @@ EOMIGRATION
       
       def mirror_table_name
         "read_only_#{self.table_name}"
+      end      
+      
+      def mirror_class_name
+        "ReadOnly#{self.name.demodulize}"
       end
       
       def column_names
@@ -96,26 +100,7 @@ EOMIGRATION
       
       def show_db_tables
         returning(self.connection.execute('SHOW TABLES')){|result| result.extend(Enumerable)}.map.flatten
-      end
-      
-      # Accepts a set of search options as a hash. The options are:
-      # :query    => String # The search query. No default value.
-      # :column   => String # A comma separated string containing the names of the database columns to search. No default value.
-      # :mode     => String # Fulltext search mode. Defaults to Warren::Modes::Boolean
-      def full_text_search(search = {})
-        search = search.clone
-        search[:mode] ||= Warren::Modes::Boolean
-        primary_key = self.primary_key
-
-        returning([]) do |instances|
-          query = "SELECT * FROM #{ReadOnlyBottle.table_name} WHERE MATCH (#{search[:column]}) AGAINST ('#{search[:query]}' #{search[:mode]})"
-          self.connection.execute(query).each_hash do |data|
-            instance = self.new(data)
-            instance.send("#{primary_key}=", data[primary_key])
-            instances << instance
-          end
-        end
-      end
+      end      
     end
 
     module InstanceMethods
