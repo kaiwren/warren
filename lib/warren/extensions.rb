@@ -21,7 +21,6 @@ module Warren
 
       def create_read_only_my_isam_table
         mig = generate_migration(:name => 255, :type => 255)
-        puts mig
         Object.class_eval mig, __FILE__, __LINE__
         migration_name.constantize.migrate(:up)
       end
@@ -91,8 +90,12 @@ EOMIGRATION
         self.columns.map(&:name)
       end
       
+      def show_triggers
+        returning(self.connection.execute("SHOW TRIGGERS LIKE '#{table_name}'")){|result| result.extend(Enumerable)}.map
+      end
+      
       def show_db_tables
-        returning(self.connection.execute('show tables')){|result| result.extend(Enumerable)}.map.flatten
+        returning(self.connection.execute('SHOW TABLES')){|result| result.extend(Enumerable)}.map.flatten
       end
       
       # Accepts a set of search options as a hash. The options are:
