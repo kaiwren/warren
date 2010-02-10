@@ -3,11 +3,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Warren::Match do
   before :all do
     # Note that you'd only use this in specs.
-    # In the normal course, you'd use generate_migration and dump
+    # In the normal course, you'd use ActiveRecord::Base#generate_migration and dump
     # the output into your migrations
-    Bottle.create_read_only_my_isam_table
-    
     Bottle.class_eval do
+      create_read_only_my_isam_table
       enable_fulltext_search
     end
   end

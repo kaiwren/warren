@@ -1,6 +1,5 @@
 require 'rubygems'
-gem 'activerecord', '>= 2.3.2'
-require 'activerecord'
+require 'active_record'
 require 'logger'
 
 module Warren

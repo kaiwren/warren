@@ -2,7 +2,9 @@
 
 (c) Copyright 2009 {Sidu Ponnappa}[http://blog.sidu.in]. All Rights Reserved.
 
-Warren is a MySQL only ActiveRecord extension that (moderately) transparently allows the creation, mirroring (via triggers) and fulltext searching of MyISAM tables for any transactional InnoDB table.
+Warren is a MySQL only ActiveRecord extension that enables full-text search on a MySQL database. MySQL supports full-text searches only on MyISAM tables; unfortunately MyISAM tables don't support transactions, which is why you rarely see them in Rails applications. The more commonly used InnoDB tables on the other hand don't support full-text searches. 
+
+Warren (moderately) transparently bridges the gap by enabling the creation, mirroring (via triggers) and full-text search of MyISAM tables for any existing transactional InnoDB table. This is a lightweight alternative to full-fledged search tools like Sphinx or Lucene, but is limited to the MySQL database.
 
 == MySQL Fulltext Search
 
